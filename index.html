@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Commande de Pizza</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-5 font-sans">
+    <div class="grid grid-cols-2 gap-2">
+      <form id="commandePizza" class="bg-white p-5 rounded-lg shadow-lg mb-5">
+        <label for="nom" class="font-bold block mb-2">Nom du client:</label>
+        <input
+          type="text"
+          name="nom"
+          id="nom"
+          required
+          class="w-full p-2 mb-4 border border-gray-300 rounded"
+        />
+
+        <label for="adresse" class="font-bold block mb-2"
+          >Adresse du client:</label
+        >
+        <input
+          type="text"
+          name="adresse"
+          id="adresse"
+          required
+          class="w-full p-2 mb-4 border border-gray-300 rounded"
+        />
+
+        <label for="pizza" class="font-bold block mb-2"
+          >Choisir une pizza:</label
+        >
+        <select
+          name="pizza"
+          id="pizza"
+          class="w-full p-2 mb-4 border border-gray-300 rounded"
+        ></select>
+
+        <label for="quantite" class="font-bold block mb-2">Quantité:</label>
+        <input
+          type="number"
+          name="quantite"
+          id="quantite"
+          min="1"
+          max="10"
+          value="1"
+          class="w-full p-2 mb-4 border border-gray-300 rounded"
+        />
+
+        <div class="space-x-4">
+          <button
+            type="button"
+            onclick="ajouter()"
+            class="bg-orange-700 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Ajouter
+          </button>
+          <button
+            type="reset"
+            class="bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Annuler
+          </button>
+        </div>
+      </form>
+      <div class="show">
+        <h3 class="text-xl font-bold mb-4">Les articles choisis</h3>
+        <table id="tableArticles" class="table-auto w-full border-collapse">
+          <thead>
+            <tr>
+              <th class="text-black p-2 border-collapse border-2">
+                Nom de la Pizza
+              </th>
+              <th class="text-black p-2 border-collapse border-2">Quantité</th>
+              <th class="text-black p-2 border-collapse border-2">
+                Prix Unitaire
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <div class="MontantTotal"></div>
+      </div>
+    </div>
+
+
+    <form id="paiementForm" class="bg-white p-5 rounded-lg shadow-lg mb-5">
+      <label for="paiement" class="font-bold block mb-2">Paiement par :</label>
+
+      <div class="mb-4">
+        <input
+          type="radio"
+          id="cb"
+          name="paiement"
+          value="cb"
+          onchange="gererPaiement()"
+          required
+          class="mr-2"
+        />
+        <label for="cb" class="mr-4">Carte Bancaire</label>
+
+        <input
+          type="radio"
+          id="cheque"
+          name="paiement"
+          value="cheque"
+          onchange="gererPaiement()"
+          required
+          class="mr-2"
+        />
+        <label for="cheque">Chèque</label>
+      </div>
+
+      <label for="numCarteBancaire" class="font-bold block mb-2"
+        >Numéro de la carte bancaire :</label
+      >
+      <input
+        type="text"
+        name="numCarteBancaire"
+        id="numCarteBancaire"
+        required
+        class="w-full p-2 mb-4 border border-gray-300 rounded"
+      />
+
+      <label for="total" class="font-bold block mb-2">Montant Total:</label>
+      <input
+        type="text"
+        id="total"
+        name="total"
+        disabled
+        class="w-full p-2 mb-4 border border-gray-300 rounded"
+      />
+
+      <button
+        type="button"
+        onclick="afficherPopup()"
+        class="bg-orange-700 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded"
+      >
+        Enreigstrer
+      </button>
+    </form>
+
+    <div
+      id="popup"
+      class="popup hidden fixed z-50 inset-0 bg-black bg-opacity-70 flex items-center justify-center"
+    >
+      <div class="bg-white p-8 rounded-lg shadow-lg w-4/5">
+        <span
+          class="close text-gray-500 hover:text-black font-bold text-3xl cursor-pointer float-right"
+          onclick="fermerPopup()"
+          >&times;</span
+        >
+        <h2 class="text-2xl font-bold mb-4">Détails de la Commande</h2>
+        <div id="details"></div>
+        <div class="mt-4 space-x-4">
+          <button
+            onclick="imprimerCommande()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Imprimer
+          </button>
+          <button
+            onclick="fermerPopup()"
+            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Quitter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
